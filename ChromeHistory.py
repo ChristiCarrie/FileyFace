@@ -40,5 +40,3 @@ def get_web_history(file):
     finally:
         if conn:
             conn.close()
-
-get_web_history(r"C:\Users\Aadit Bansal\Downloads\Lab 02 Slides (1) (2).pdf")
