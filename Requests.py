@@ -12,23 +12,22 @@ def ask_for_file(path, username):
     with open(directory_tree, "r") as file:
         tree = file.read()
 
-    prompt = ["Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.",
-    "I will give you details including the name of file, the type (extension) of the file, and a summary of the file contents.",
-    "You must either choose a folder to put this file in, or you can create any number of new folders anywhere if you feel like the file doesn't reliably fit anywhere.",
-    "I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.",
-    "file_name = " + fileName,
-    "file_type = " + fileExtension,
-    "file_content_summary = " + str(fileContent) + "\n",
-    "directory_tree = \n" + tree]
-
-    prompt = "\n".join(prompt)
+    prompt = f"""Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.
+    I will give you details including the name of file, the type (extension) of the file, and a summary of the file contents.
+    You must either choose a folder to put this file in, or you can create any number of new folders anywhere if you feel like the file doesn't reliably fit anywhere.
+    I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.
+    file_name = {fileName},
+    file_type = {fileExtension},
+    file_content_summary = {str(fileContent)},
+    directory_tree = {tree}"""
 
     response = client.chat.completions.create(
         messages = [
-            {"role": "user", "content": prompt,}
+            {"role": "user", "content": prompt}
         ],
         model = "gpt-4o-mini",
-        max_tokens = 50
+        max_tokens = 50,
+        temperature=0,
     )
 
     print(fr'C:/Users/{username}/' + response.choices[0].message.content)
@@ -60,5 +59,3 @@ def save_tree_to_file(tree, file_name):
     with open(file_name, 'w') as f:
         for line in tree:
             f.write(line + '\n')
-
-ask_for_file(r"C:\Users\xtoml\Desktop\giggle\horse.jpg", 'xtoml')
