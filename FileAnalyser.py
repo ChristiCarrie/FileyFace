@@ -9,7 +9,7 @@ from docx import Document
 from pptx import Presentation
 
 textrazor.api_key = "d6c3be0ed8bfbf0dcb235a80476a8d7dd009e91a316fd21b9f939563"
-client = textrazor.TextRazor(extractors=["entities", "topics", "words"])
+client = textrazor.TextRazor(extractors=["entities", "topics", "words", "relations"])
 
 openai.api_key = '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'
 
@@ -164,6 +164,9 @@ def fileContent(path):
             if (summary.count(w.token.lower()) == 0):
                 summary.append(w.token.lower())
 
+    for p in text.properties():
+        print(p)
+
     return summary
 
 def webAddress():
@@ -171,3 +174,5 @@ def webAddress():
 
 def fileAll(path):
     return fileName(path), fileExtension(path), summarizeFileContent(path), fileContent(path) #, webAddress()
+
+fileContent("/Users/christicarrie/Downloads/Christina_Wu-Resume_Fall2024.pdf")
