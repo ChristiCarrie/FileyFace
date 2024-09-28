@@ -46,4 +46,4 @@ def webAddress():
     return
 
 def fileAll(path):
-    return fileName(path), fileExtension(path), fileContent(path), webAddress()
+    return fileName(path), fileExtension(path), fileContent(path)#, webAddress()
