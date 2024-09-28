@@ -1,4 +1,4 @@
 # FileyFace
 HackGT11 -- File Manager that automatically sorts file downloads. One click away from organisation.
 
-Logo: https://github.com/user-attachments/assets/d86ebfb0-29de-4ed8-8f6d-c2084abdd509
+Logo: https://github.com/user-attachments/assets/4beaeb5c-239c-4fd2-9989-8a17582d91a6
