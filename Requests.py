@@ -1,36 +1,46 @@
-import openai
+from openai import OpenAI
 import os
 from FileAnalyser import fileAll
 
-openai.api_key = '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'
+client = OpenAI(
+    api_key = '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'
+)
 
 def ask_for_file(path, username):
     fileName, fileExtension, fileContent = fileAll(path)
     directory_tree = get_directory_tree(username)
-    with open("directory_tree", "r") as file:
+    with open(directory_tree, "r") as file:
         tree = file.read()
 
-    response = openai.Completion.create(
+    prompt = ["Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.",
+    "I will give you details including the name of file, the type (extension) of the file, and a summary of the file contents.",
+    "You must either choose a folder to put this file in, or you can create any number of new folders anywhere if you feel like the file doesn't reliably fit anywhere.",
+    "I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.",
+    "file_name = " + fileName,
+    "file_type = " + fileExtension,
+    "file_content_summary = " + str(fileContent) + "\n",
+    "directory_tree = \n" + tree]
+
+    prompt = "\n".join(prompt)
+
+    response = client.chat.completions.create(
+        messages = [
+            {"role": "user", "content": prompt,}
+        ],
         model = "gpt-4o-mini",
-        prompt = "Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.\n" +
-        "I will give you details including the name of file, the type (extension) of the file, and a summary of the file contents.\n" +
-        "You must either choose a folder to put this file in, or you can create any number of new folders anywhere if you feel like the file doesn't reliably fit anywhere.\n" +
-        "I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.\n" +
-        "file_name = " + fileName + "\n" +
-        "file_type = " + fileExtension + "\n" +
-        "file_content_summary = " + str(fileContent) + "\n\n" +
-        "directory_tree = \n" + tree,
-        max_tokens = 100
+        max_tokens = 50
     )
 
-    print(response.choices[0].text.strip())
+    print(fr'C:/User/{username}/' + response.choices[0].message.content)
 
-    return response.choices[0].text.strip()
+    #return response['choices'][0]['message']['content'].strip()
 
 
 def get_directory_tree(username):
     directory = fr'C:\User\{username}\FileyFace'
     output_file = fr'C:\User\{username}\FileyFace\directory_tree.txt'
+    os.makedirs(directory, exist_ok=True)
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     tree = list_directory_tree(directory)
     save_tree_to_file(tree, output_file)
     return output_file
@@ -50,3 +60,5 @@ def save_tree_to_file(tree, file_name):
     with open(file_name, 'w') as f:
         for line in tree:
             f.write(line + '\n')
+
+ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\WhatsApp Image 2024-09-28 at 00.11.33.jpeg", 'Aadit Bansal')

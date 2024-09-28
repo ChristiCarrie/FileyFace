@@ -33,7 +33,10 @@ def getWordsOnlyPDF(path):
     
 def fileContent(path):
     client.set_classifiers(["textrazor_iab_content_taxonomy_3.0"])
-    text = client.analyze(getWordsOnlyPDF(path))
+    pdfExist = getWordsOnlyPDF(path)
+    if pdfExist == None:
+        return None
+    text = client.analyze(pdfExist)
     summary = []
 
     for c in text.categories():
