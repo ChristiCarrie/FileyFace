@@ -143,29 +143,29 @@ def fileContent(path):
     else:
         return None
     text = client.analyze(text_content)
+    temp = []
     summary = []
 
     for c in text.categories():
         if (c.score > 0.4):
-            summary.append(c.label)
+            summary.append(c.label.lower())
 
     for s in text.entities():
         if (s.confidence_score >= 5 and s.relevance_score >= 0.2):
-            if (summary.count(s.matched_text.lower()) == 0):
-                summary.append(s.matched_text.lower())
+            temp.append(s.matched_text.lower())
 
     for t in text.topics():
         if (t.score > 0.5):
-            if (summary.count(s.matched_text.lower()) == 0):
-                summary.append(s.matched_text.lower())
+            temp.append(s.matched_text.lower())
 
     for w in text.words():
-        if (w.part_of_speech == "NNP" or w.part_of_speech == "NNPS"):
-            if (summary.count(w.token.lower()) == 0):
+        if (w.part_of_speech == "NNP"):
+            if (summary.count(w.token.lower) == 0 and not w.token.isnumeric()):
                 summary.append(w.token.lower())
-
-    for p in text.properties():
-        print(p)
+    
+    for t in temp:
+        if (temp.count(t) > 1 and summary.count(t) == 0 and not t.isnumeric()):
+            summary.append(t)
 
     return summary
 
@@ -174,5 +174,3 @@ def webAddress():
 
 def fileAll(path):
     return fileName(path), fileExtension(path), summarizeFileContent(path), fileContent(path) #, webAddress()
-
-fileContent("/Users/christicarrie/Downloads/Christina_Wu-Resume_Fall2024.pdf")
