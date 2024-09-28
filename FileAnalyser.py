@@ -37,6 +37,13 @@ def getWordsOnlyPDF(path, pages):
         return text
 
 def summarizeFileContent(path, pages):
+    text_content = ''
+    fE = fileExtension(path)
+    if (fE == '.pdf'):
+        text_content = getWordsOnlyPDF(path, pages)
+    else:
+        return None
+    
     features = """
     Please summarize the following text focusing on features that one would consider
     when deciding where to place it in an organized file directory. 
@@ -45,7 +52,7 @@ def summarizeFileContent(path, pages):
     What follows are the file name along with some text from the file.
     """
     
-    prompt = f"{features}\n\nFilename: {fileName(path)}\nText:\n{getWordsOnlyPDF(path, pages)}"
+    prompt = f"{features}\n\nFilename: {fileName(path)}\nText:\n{text_content}"
     
     response = openai.chat.completions.create(
         model='gpt-4o-mini',
@@ -95,4 +102,4 @@ def webAddress():
     return
 
 def fileAll(path):
-    return fileName(path), fileExtension(path), fileContent(path)#, webAddress()
+    return fileName(path), fileExtension(path), summarizeFileContent(path, range(5))#, webAddress()
