@@ -9,5 +9,4 @@ def moveFile(src, dst):
             break
         except OSError as e:
             text = os.path.splitext(".")
-            dst = text[0] + '(' + i + ')' + text[1]
-            
+            dst = text[0] + '(' + str(i) + ')' + text[1]
