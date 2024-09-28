@@ -22,7 +22,7 @@ class FileHandler(FileSystemEventHandler):
         if event.is_directory:
             return
         
-        time.sleep(0.2)
+        time.sleep(0.3)
         file_name = os.path.basename(event.src_path)
         print(f"Detected change: {file_name}")      # Temp debug statement
         
