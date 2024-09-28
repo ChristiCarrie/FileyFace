@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - FileyFace</title>
+    <link rel="icon" href="FileyFaceLogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <img src="FileyFaceLogo.png" alt="Logo" />
+                </a>
+                <a href="index.html" class="logo-text">FileyFace</a>
+            </div>
+    
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="future.html">Future</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1 id="sortWithEase">Sort with speed,</h1>
+            <h1 id="findWithSpeed">Find what you need.</h1>
+            <div class="gray">
+            <p>FileyFace saves people from having a million miscellaneous files in their downloads folder, by using AI to sort and move downloaded files into the folders they belong in. With just one click, you can save yourself time and hassle by letting us take care of organizing your files.</p>
+            </div>
+
+            <div class="github-container">
+                <p>Check us out on GitHub: </p>
+                <a href="https://github.com" target="_blank">github.com</a>
+            </div>
+            
+            <div class="video-container">
+                <iframe width="854" height="480" src="https://www.youtube.com/embed/MtN1YnoL46Q?si=rgZNFI6mIbLv0m92" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <br>
+
+            <div class="gray">
+            <p>FileyFace was conceived at a late-night dinner/brainstorming session between the team. We were going through our computers and we saw one of our teammate's downloads folder. It was crazy, absolutely everything was in that folder; homework, personal projects, video downloads, random pictures, VS Code, and more. We were laughing about it, and the idea suddenly came to us! An application that could prevent the clutter by addressing the root cause: the initial download.</p>
+            </div>
+            <div class="gray">
+            <p>Our application focuses on leveraging OpenAI and TextRazor APIs to immediately place a newly downloaded file into its best-suited folder. We use OpenAI to generate the final prediction score for each folder and TextRazor to parse keywords from each document. FileyFace supports multiple file formats, including .pdf, .docx, .pptx, and more! We also use multiple of Python's libraries, including but not limited to: os, shutil, sqlite3, and watchdog. We are combining AI and tech stack to determine the intended folder location of a downloaded file, right when it's first downloaded.</p>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>FileyFace</p>
+    </footer>
+</body>
+</html>
