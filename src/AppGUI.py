@@ -94,7 +94,7 @@ class FileHandler(FileSystemEventHandler):
 
 
         # Set the small window icon (this is for the title bar)
-        small_icon = Image.open("FileyFaceLogo.png")
+        small_icon = Image.open("./Website/FileyFaceLogo.png")
         small_icon = small_icon.resize((32, 32), Image.Resampling.LANCZOS)  # Use 32x32 for the title bar icon size
         small_icon_image = ImageTk.PhotoImage(small_icon)
         prompt_window.iconphoto(False, small_icon_image)  # Set the window icon

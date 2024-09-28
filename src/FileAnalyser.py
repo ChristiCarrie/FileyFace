@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 textrazor.api_key = "d6c3be0ed8bfbf0dcb235a80476a8d7dd009e91a316fd21b9f939563"
-client = textrazor.TextRazor(extractors=["entities", "topics", "words", "relations"])
+client = textrazor.TextRazor(extractors=["entities", "topics", "words", "phrases"])
 
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
@@ -163,13 +163,19 @@ def fileContent(path):
         if (t.score > 0.5):
             temp.append(s.matched_text.lower())
 
-    for w in text.words():
-        if (w.part_of_speech == "NNP"):
-            if (summary.count(w.token.lower) == 0 and not w.token.isnumeric()):
-                summary.append(w.token.lower())
+    for p in text.noun_phrases():
+        num = 0
+        count = 0
+        for w in p.words:
+            num = num + 1
+            if (w.part_of_speech == "NNP" and not w.token.isnumeric() and (w.input_end_offset - w.input_start_offset <= 45) and ((w.input_end_offset - w.input_start_offset >= 2))):
+                count = count + 1
+        if count == num:
+            for w in p.words:
+                temp.append(w.token.lower())
     
     for t in temp:
-        if (temp.count(t) > 1 and summary.count(t) == 0 and not t.isnumeric()):
+        if (summary.count(t) == 0 and not t.isnumeric()):
             summary.append(t)
 
     return summary
