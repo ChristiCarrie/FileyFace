@@ -4,6 +4,7 @@ from pathlib import Path
 import PyPDF2
 import textrazor
 import openai
+import time
 
 textrazor.api_key = "d6c3be0ed8bfbf0dcb235a80476a8d7dd009e91a316fd21b9f939563"
 client = textrazor.TextRazor(extractors=["entities", "topics", "words"])
@@ -19,6 +20,16 @@ def fileExtension(path):
     filePath = Path(path)
     fileExtension = filePath.suffix
     return fileExtension
+
+# def open_file_with_retry(path, mode='rb', retries=5, delay=2):
+#     for attempt in range(retries):
+#         try:
+#             return open(path, mode)
+#         except PermissionError:
+#             if attempt < retries - 1:
+#                 time.sleep(delay)
+#             else:
+#                 raise
 
 def getWordsOnlyPDF(path, pages):
     fE = fileExtension(path)
