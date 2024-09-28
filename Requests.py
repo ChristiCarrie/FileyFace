@@ -31,14 +31,14 @@ def ask_for_file(path, username):
         max_tokens = 50
     )
 
-    print(fr'C:/User/{username}/' + response.choices[0].message.content)
+    print(fr'C:/Users/{username}/' + response.choices[0].message.content)
 
     #return response['choices'][0]['message']['content'].strip()
 
 
 def get_directory_tree(username):
-    directory = fr'C:\User\{username}\FileyFace'
-    output_file = fr'C:\User\{username}\FileyFace\directory_tree.txt'
+    directory = fr'C:\Users\{username}\FileyFace'
+    output_file = fr'C:\Users\{username}\FileyFace\directory_tree.txt'
     os.makedirs(directory, exist_ok=True)
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     tree = list_directory_tree(directory)
@@ -61,4 +61,4 @@ def save_tree_to_file(tree, file_name):
         for line in tree:
             f.write(line + '\n')
 
-ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\WhatsApp Image 2024-09-28 at 00.11.33.jpeg", 'Aadit Bansal')
+ask_for_file(r"C:\Users\xtoml\Desktop\giggle\horse.jpg", 'xtoml')
