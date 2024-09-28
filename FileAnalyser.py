@@ -7,6 +7,7 @@ import openai
 import time
 from docx import Document
 from pptx import Presentation
+from ChromeHistory import get_web_history
 
 textrazor.api_key = "d6c3be0ed8bfbf0dcb235a80476a8d7dd009e91a316fd21b9f939563"
 client = textrazor.TextRazor(extractors=["entities", "topics", "words", "relations"])
@@ -169,10 +170,10 @@ def fileContent(path):
 
     return summary
 
-def webAddress():
-    return
+def webAddress(path):
+    return get_web_history(path)
 
 def fileAll(path):
-    return fileName(path), fileExtension(path), summarizeFileContent(path), fileContent(path) #, webAddress()
+    return fileName(path), fileExtension(path), summarizeFileContent(path), fileContent(path), webAddress(path)
 
 fileContent("/Users/christicarrie/Downloads/Christina_Wu-Resume_Fall2024.pdf")
