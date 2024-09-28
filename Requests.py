@@ -7,18 +7,20 @@ client = OpenAI(
 )
 
 def ask_for_file(path, username):
-    fileName, fileExtension, fileContent = fileAll(path)
+    fileName, fileExtension, fileSummary, fileContent = fileAll(path)
     directory_tree = get_directory_tree(username)
     with open(directory_tree, "r") as file:
         tree = file.read()
 
     prompt = f"""Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.
-    I will give you details including the name of file, the type (extension) of the file, and a summary of the file contents.
-    You must either choose a folder to put this file in, or you can create any number of new folders anywhere if you feel like the file doesn't reliably fit anywhere.
+    I will give you details including the name of file, the type (extension) of the file, and two summaries of the file contents.
+    You must either choose a folder to put this file in, or you can create a few new folders anywhere if you feel like the file doesn't reliably fit anywhere.
     I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.
+    Maybe you'll want to generalise documents or powerpoints or spreadsheets or text documents or images and so on.
     file_name = {fileName},
     file_type = {fileExtension},
-    file_content_summary = {str(fileContent)},
+    file_content_summary = {str(fileSummary)},
+    file_content_summary_2 = {str(fileContent)},
     directory_tree = {tree}"""
 
     response = client.chat.completions.create(
@@ -59,3 +61,5 @@ def save_tree_to_file(tree, file_name):
     with open(file_name, 'w') as f:
         for line in tree:
             f.write(line + '\n')
+
+ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\Signature.jpeg", 'Aadit Bansal')
