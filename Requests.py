@@ -7,13 +7,14 @@ client = OpenAI(
 )
 
 def ask_for_file(path, username):
-    fileName, fileExtension, fileSummary, fileContent = fileAll(path)
+    fileName, fileExtension, fileSummary, fileContent, webAddress = fileAll(path)
     directory_tree = get_directory_tree(username)
     with open(directory_tree, "r") as file:
         tree = file.read()
 
     prompt = f"""Below is a directory tree of my file explorer. I have a downloaded file that I need to reliably categorise.
-    I will give you details including the name of file, the type (extension) of the file, and two summaries of the file contents.
+    I will give you details including the name of file, the type (extension) of the file, two summaries of the file contents, and the chrome url from which the file was downloaded.
+    You must take these all into consideration when performing the following steps.
     You must either choose a folder to put this file in, or you can create a few new folders anywhere if you feel like the file doesn't reliably fit anywhere.
     I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.
     Maybe you'll want to generalise documents or powerpoints or spreadsheets or text documents or images and so on.
@@ -21,6 +22,7 @@ def ask_for_file(path, username):
     file_type = {fileExtension},
     file_content_summary = {str(fileSummary)},
     file_content_summary_2 = {str(fileContent)},
+    download_web_address = {str(webAddress)},
     directory_tree = {tree}
     Important note: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
     the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
