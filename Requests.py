@@ -21,7 +21,10 @@ def ask_for_file(path, username):
     file_type = {fileExtension},
     file_content_summary = {str(fileSummary)},
     file_content_summary_2 = {str(fileContent)},
-    directory_tree = {tree}"""
+    directory_tree = {tree}
+    Important note: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
+    the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
+    """
 
     response = client.chat.completions.create(
         messages = [
@@ -31,10 +34,11 @@ def ask_for_file(path, username):
         max_tokens = 50,
         temperature=0,
     )
+    
+    dst_file_path = fr'C:/Users/{username}/' + response.choices[0].message.content
+    print(dst_file_path)    # for temp debug
 
-    print(fr'C:/Users/{username}/' + response.choices[0].message.content)
-
-    #return response['choices'][0]['message']['content'].strip()
+    return dst_file_path
 
 
 def get_directory_tree(username):
