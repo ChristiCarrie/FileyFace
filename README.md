@@ -20,11 +20,11 @@ HackGT11 -- File Manager that automatically sorts file downloads. One click away
 5. OpenAI generates final prediction score for each folder, or if any should be created
 
 **Decision Making**
-
--- collect data
--- take multiple outputs / inputs
-based on curr dir tree that WE make
--- use AI to decide which output is best
+1. Data is collected and compiled from file analysis
+   --> including summary, key words, file name, file extension, web address
+2. Directory tree is loaded and saved from computer
+3. Based on folder names and file analysis data, prompt OpenAI API
+4. Inputs are weighted and "best folder destination" is outputted to user
 
 **File Placement**
 1. Saved directory tree is parsed
