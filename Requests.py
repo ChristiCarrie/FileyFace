@@ -1,10 +1,12 @@
 from openai import OpenAI
 import os
 from FileAnalyser import fileAll
+from dotenv import load_dotenv
 
-client = OpenAI(
-    api_key = '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'
-)
+load_dotenv()
+
+client = OpenAI()
+client.api_key = os.getenv('OPENAI_API_KEY')
 
 def ask_for_file(path, username):
     fileName, fileExtension, fileSummary, fileContent, webAddress = fileAll(path)
@@ -16,7 +18,7 @@ def ask_for_file(path, username):
     I will give you details including the name of file, the type (extension) of the file, two summaries of the file contents, and the chrome url from which the file was downloaded.
     You must take these all into consideration when performing the following steps.
     You must either choose a folder to put this file in, or you can create a few new folders anywhere if you feel like the file doesn't reliably fit anywhere.
-    I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less.
+    I want back from you the new file path from the root of the directory to the newly downloaded file. ONLY the file path, nothing more nothing less, DO NOT add new line character after slash
     Maybe you'll want to generalise documents or powerpoints or spreadsheets or text documents or images and so on.
     file_name = {fileName},
     file_type = {fileExtension},
@@ -24,8 +26,10 @@ def ask_for_file(path, username):
     file_content_summary_2 = {str(fileContent)},
     download_web_address = {str(webAddress)},
     directory_tree = {tree}
-    Important note: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
+    Important note #1: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
     the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
+    Important note #2: If a file does not contain any defining features or characteristics, please put it in an 'Other' folder
+    Important note #3: DO NOT leave off the file extension
     """
 
     response = client.chat.completions.create(
@@ -68,4 +72,4 @@ def save_tree_to_file(tree, file_name):
         for line in tree:
             f.write(line + '\n')
 
-ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\Signature.jpeg", 'Aadit Bansal')
+# ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\Signature.jpeg", 'Aadit Bansal')

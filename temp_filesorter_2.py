@@ -1,70 +1,70 @@
 import os
 import time
 import tkinter as tk
-from pathlib import Path
 from PIL import Image, ImageTk
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-import Requests
 
-# Set source root folder path (default=Downloads)
-SRC_ROOT = os.path.expanduser("~/Downloads")
-
-USERNAME = os.environ.get('USER') or os.environ.get('USERNAME')
+# Set the Downloads folder path
+DOWNLOAD_FOLDER = os.path.expanduser("~/Downloads")
 
 class FileHandler(FileSystemEventHandler):
-    def __init__(self):
-        super().__init__()
-        #self.processed_files = set()
-        
+    def _init_(self):
+        super()._init_()
+        self.processed_files = set()  # To keep track of processed files
+
     def on_modified(self, event):
-        # Ignore directory creation events
-        if event.is_directory:
-            return
-        
-        time.sleep(0.2)
-        file_name = os.path.basename(event.src_path)
-        print(f"Detected change: {file_name}")      # Temp debug statement
-        
-        # Logic to ignore temporary files
-        if file_name.endswith(('.tmp', '.crdownload')):
-            print(f"Ignoring temporary file: {file_name}")     # Temp debug statement        
-            return
-        else:
-            print(f"Processing file: {file_name}")      # Temp debug statement
-            #if file_name not in self.processed_files:
-                #self.processed_files.add(file_name)
-            self.organize_file(file_name)
-            # else:
-            #     print(f"'{file_name}' has already been processed.")     # Temp debug statement
-                
-    def organize_file(self, file_name):
-        src_file_path = os.path.join(SRC_ROOT, file_name)
-        
-        regenerate = True
-        while (regenerate):
-            # Check if the file still exists
-            if not os.path.exists(src_file_path):
-                print(f"Source file '{src_file_path}' does not exist. Skipping.")
+        # Check if a file was created in the Downloads folder
+        if not event.is_directory:
+            file_name = os.path.basename(event.src_path)
+            print(f"Detected change: {file_name}")  # Debug statement
+            
+            # Check if the file has a complete extension
+
+            if file_name.endswith(('.tmp', '.crdownload')):  
+                print(f"Ignoring temporary file: {file_name}")  # Debug statement
                 return
-            
-            dst_file_filepath = Requests.ask_for_file(src_file_path, USERNAME)
-            dst_file_filepath = Path(str(dst_file_filepath))
-            print(dst_file_filepath)
-            
-            # Prompt the user for confirmation to move the file
-            user_response = self.prompt_user(file_name, dst_file_filepath)
-            if user_response:
-                if user_response == 'REGEN':
-                    continue
+            else:
+                print(f"Processing file: {file_name}")  # Debug statement
+                if file_name not in self.processed_files:  # Only process if not already processed
+                    self.processed_files.add(file_name)
+                    self.organize_file(file_name, event.src_path)
                 else:
-                    os.makedirs(dst_file_filepath.parent, exist_ok=True)
-                    file_ext = os.path.splitext(file_name)[1]
-                    final_file_name = user_response + file_ext
-                    dst_file_filepath = dst_file_filepath.parent / final_file_name
-                    os.rename(src_file_path, dst_file_filepath)
-                    print(f"Moved '{file_name}' to '{dst_file_filepath.parent}' as '{final_file_name}'")
-        
+                    print(f"'{file_name}' has already been processed. Ignoring.")  # Debug statement
+
+    def organize_file(self, file_name, file_path):
+        folder_name = self.determine_folder(file_name)
+        if folder_name:
+            destination_folder = os.path.join(DOWNLOAD_FOLDER, folder_name)
+            os.makedirs(destination_folder, exist_ok=True)  # Create folder if it doesn't exist
+
+            # Prompt user for confirmation to move the file
+            new_file_name = self.prompt_user(file_name, destination_folder)
+            if new_file_name is not None:
+                if new_file_name:  # If the user entered a new name
+                    file_extension = os.path.splitext(file_name)[1]  # Get the original file extension
+                    final_file_name = new_file_name + file_extension  # Combine new name with original extension
+                    os.rename(file_path, os.path.join(destination_folder, final_file_name))
+                    print(f"Moved '{file_name}' to '{destination_folder}' as '{final_file_name}'")
+                else:  # If the user left the entry empty
+                    print(f"'{file_name}' remains in Downloads.")
+            else:
+                print(f"'{file_name}' remains in Downloads.")
+        else:
+            print(f"No folder name determined for {file_name}. File will remain in Downloads.")
+
+    def determine_folder(self, file_name):
+        # Define keywords for categorization
+        if 'cs2110' in file_name.lower():
+            return 'cs2110'
+        elif 'personal' in file_name.lower():
+            return 'personal'
+        elif 'work' in file_name.lower():
+            return 'work'
+        elif 'project' in file_name.lower() or 'projects' in file_name.lower():
+            return 'projects'
+        else:
+            return 'other'  # Default folder for unrecognized files
 
     def prompt_user(self, file_name, destination_folder):
         print(f"Prompting user to move '{file_name}' to '{destination_folder}'")  # Debug statement
@@ -75,7 +75,7 @@ class FileHandler(FileSystemEventHandler):
         prompt_window.attributes('-topmost', True)  # Make the window stay on top
         # prompt_window.geometry("400x200+500+500")  # Set the size of the window MAKE THIS BIGGER OR SMALLER ACCORDINGLY
 
-        popup_width = 800
+        popup_width = 400
         popup_height = 200
 
         # get the screen dimension
@@ -107,7 +107,7 @@ class FileHandler(FileSystemEventHandler):
 
         # Create a frame to hold the entry and label
         input_frame = tk.Frame(prompt_window, bg="#f0f0f0")
-        input_frame.pack(pady=5)
+        input_frame.pack(pady=5)  # Pack the frame
 
         # Create the entry for the new file name
         new_file_name_entry = tk.Entry(input_frame, font=("Arial", 12), width=30)
@@ -123,19 +123,15 @@ class FileHandler(FileSystemEventHandler):
         # tk.Label(prompt_window, text=f"Do you want to move '{new_file_name_entry.get()} {file_extension}' to '{destination_folder}'?", bg="#f0f0f0", font=("Arial", 12)).pack(pady=10)
 
         # Variable to store user choice
-        user_choice = [None] 
+        user_choice = [None]  # Using a list to hold reference
 
         def on_yes():
             user_choice[0] = new_file_name_entry.get().strip()  # Get new file name
-            prompt_window.destroy() 
-
-        def on_regen():
-            user_choice[0] = 'REGEN'
-            prompt_window.destroy()
+            prompt_window.destroy()  # Close the prompt window
 
         def on_no():
-            user_choice[0] = None       # Indicate to keep the file in Downloads
-            prompt_window.destroy()
+            user_choice[0] = None  # Indicate to keep the file in Downloads
+            prompt_window.destroy()  # Close the prompt window
 
         button_frame = tk.Frame(prompt_window, bg="#f0f0f0")  # Frame for buttons
         button_frame.pack(pady=20)
@@ -143,8 +139,6 @@ class FileHandler(FileSystemEventHandler):
         yes_button = tk.Button(button_frame, text="Yes", command=on_yes, font=("Arial", 12), bg="#4CAF50", fg="white")
         yes_button.pack(side=tk.LEFT, padx=10)
 
-        regen_button = tk.Button(button_frame, text="Regenerate", command=on_regen, font=("Arial", 12), bg="#eb9336", fg="white")
-        regen_button.pack(side=tk.LEFT, padx=10)
         no_button = tk.Button(button_frame, text="No", command=on_no, font=("Arial", 12), bg="#f44336", fg="white")
         no_button.pack(side=tk.RIGHT, padx=10)
 
@@ -156,9 +150,9 @@ class FileHandler(FileSystemEventHandler):
 def start_monitoring():
     observer = Observer()
     event_handler = FileHandler()
-    observer.schedule(event_handler, SRC_ROOT, recursive=False)
+    observer.schedule(event_handler, DOWNLOAD_FOLDER, recursive=False)
     observer.start()
-    print(f"Monitoring folder: {SRC_ROOT}")
+    print(f"Monitoring folder: {DOWNLOAD_FOLDER}")
     try:
         while True:
             time.sleep(1)
@@ -168,4 +162,3 @@ def start_monitoring():
 
 if __name__ == "__main__":
     start_monitoring()
-    
