@@ -1,5 +1,5 @@
 # FileyFace
-[fileyface.co](fileyface.co) -- HackGT 11
+[fileyface.co](https://fileyface.co/Website/index.html) -- HackGT 11
 
 File Manager that automatically sorts file downloads. One click away from organisation. 
 
