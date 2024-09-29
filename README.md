@@ -37,8 +37,7 @@ File Manager that automatically sorts file downloads. One click away from organi
    --> "Regenerate" can be pressed as many times as necessary
 
 **File Placement**
-1. Saved directory tree is parsed
-2. File is unzipped from package (if necessary)
+1. File is unzipped from package (if necessary)
 3. Python os package is used to move file from src to destination
 4. If file already exists at that location, copy file with "(1)" appended to file name
 
