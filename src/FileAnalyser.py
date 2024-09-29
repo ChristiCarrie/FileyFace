@@ -44,13 +44,17 @@ def getWordsOnlyPDF(path):
         return None
     else:
         text = ''
-        with open(path, 'rb') as file:
-            reader = PyPDF2.PdfReader(file)
-            for page_num in range(3):
-                if page_num < len(reader.pages):    
-                    page = reader.pages[page_num]
-                    text += page.extract_text()
-        return text
+        try:
+            with open(path, 'rb') as file:
+                reader = PyPDF2.PdfReader(file)
+                for page_num in range(3):
+                    if page_num < len(reader.pages):    
+                        page = reader.pages[page_num]
+                        text += page.extract_text()
+        except PermissionError as E:
+            text = None
+        finally:
+            return text
     
 def getWordsOnlyDOCX(path):
     doc = Document(path)

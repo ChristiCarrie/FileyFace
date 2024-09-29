@@ -8,6 +8,8 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import Requests
 from Unzip import unzip
+from datetime import datetime
+from FileHistory import write_to_file
 
 
 SRC_ROOT = os.path.expanduser("~/Downloads")
@@ -66,15 +68,14 @@ class FileHandler(FileSystemEventHandler):
                     try:
                         time.sleep(0.2)
                         os.makedirs(dst_file_filepath.parent, exist_ok=True)
-                        if file_ext != '.zip':
-                            print('here1')            
+                        now = datetime.now()
+                        write_to_file(final_file_name, dst_file_filepath.parent / final_file_name, now)
+                        if file_ext != '.zip':         
                             dst_file_filepath = dst_file_filepath.parent / final_file_name
                             os.rename(src_file_path, dst_file_filepath)
-
                         else:
-
-                            unzip(src_file_path, dst_file_filepath.parent)
                             time.sleep(4)
+                            unzip(src_file_path, dst_file_filepath.parent)
                     except FileExistsError as E:
                         print('File already exists at specified location - left in Downloads')
                     finally:
