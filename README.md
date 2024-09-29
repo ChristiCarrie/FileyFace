@@ -41,8 +41,9 @@ File Manager that automatically sorts file downloads. One click away from organi
 
 **File Placement**
 1. File is unzipped from package (if necessary)
-3. Python os package is used to move file from src to destination
-4. If file already exists at that location, file is left in the Downloads folder with a message to the user
+2. Python os package is used to move file from src to destination
+3. If file already exists at that location, file is left in the Downloads folder with a message to the user
+4. If the file is successfully moved to the destination, its name, file path, and timestamp is stored in a file_history.csv file in the FileyFace folder 
 
 # Demo
 --video here--
