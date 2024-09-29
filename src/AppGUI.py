@@ -153,7 +153,7 @@ class FileHandler(FileSystemEventHandler):
 
         # Variable to store user choice
         user_choice = [None, None, None]
-
+        
         def on_yes():
             user_choice[0] = 'YES'
             user_choice[1] = new_file_name_entry.get().strip()  
@@ -177,6 +177,7 @@ class FileHandler(FileSystemEventHandler):
 
         regen_button = tk.Button(button_frame, text="Regenerate", command=on_regen, font=("Arial", 12), bg="#eb9336", fg="white")
         regen_button.pack(side=tk.LEFT, padx=10)
+
         no_button = tk.Button(button_frame, text="No", command=on_no, font=("Arial", 12), bg="#f44336", fg="white")
         no_button.pack(side=tk.RIGHT, padx=10)
 
