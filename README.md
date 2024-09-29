@@ -16,7 +16,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 **File Analysis**
 1. Immediately upon file download, file name and extension are read
 2. Web address of download (e.g. "canvas.com" for an assignment download) are read from Chrome history
-3. File is parsed and summarised depending on doc type
+3. Beginning of file is parsed and summarised depending on doc type
 
    --> OpenAI API assists in general file summarisation
 
@@ -39,7 +39,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 **File Placement**
 1. File is unzipped from package (if necessary)
 3. Python os package is used to move file from src to destination
-4. If file already exists at that location, copy file with "(1)" appended to file name
+4. If file already exists at that location, file is left in the Downloads folder with a message to the user
 
 # Demo
 --video here--
