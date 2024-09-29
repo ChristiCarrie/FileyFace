@@ -109,7 +109,7 @@ h1 {
     text-align: center;
 }
 
-#sortWithEase {
+#turnChaosIntoClarity {
     margin-top: 10px;
     margin-bottom: 0px;
     margin-right: 0px;
@@ -117,6 +117,7 @@ h1 {
     font-weight: 750;
 }
 
+/*
 #findWithSpeed {
     margin-top: 0px;
     margin-bottom: 10px;
@@ -124,6 +125,7 @@ h1 {
     line-height: 2;
     font-weight: 750;
 }
+*/
 
 .video-container {
     display: flex;
