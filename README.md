@@ -15,7 +15,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 # How FileyFace Works
 **File Analysis**
 1. Immediately upon file download, file name and extension are read
-2. Web address of download (e.g. "canvas.com" for an assignment download) are read from Chrome history
+2. Web address of download (e.g. "canvas.com" for an assignment download) is read from Chrome history
 3. Beginning of file is parsed and summarised depending on doc type
 
    --> OpenAI API assists in general file summarisation
