@@ -109,23 +109,13 @@ h1 {
     text-align: center;
 }
 
-#turnChaosIntoClarity {
-    margin-top: 10px;
-    margin-bottom: 0px;
+#chaos {
+    margin-top: 60px;
+    margin-bottom: 60px;
     margin-right: 0px;
     line-height: 0.5;
     font-weight: 750;
 }
-
-/*
-#findWithSpeed {
-    margin-top: 0px;
-    margin-bottom: 10px;
-    margin-left: 0px;
-    line-height: 2;
-    font-weight: 750;
-}
-*/
 
 .video-container {
     display: flex;
