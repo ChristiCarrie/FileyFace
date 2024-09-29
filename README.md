@@ -5,7 +5,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 
 **Set-Up**
 1. Clone the repository
-2. Download all requirements ``` pip install <requirements> ```
+2. Download all requirements ``` pip install -r requirements.txt ```
 3. Set API key for OpenAI and TextRazor (if needed)
 4. Run in background
 5. Download .pdf, .docx, .pptx, and .txt files as needed!
@@ -15,7 +15,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 # How FileyFace Works
 **File Analysis**
 1. Immediately upon file download, file name and extension are read
-2. Web address of download (e.g. "canvas.com" for an assignment download) are read from Chrome history
+2. Web address of download (e.g. "canvas.com" for an assignment download) is read from Chrome history
 3. Beginning of file is parsed and summarised depending on doc type
 
    --> OpenAI API assists in general file summarisation

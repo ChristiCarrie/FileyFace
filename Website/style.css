@@ -3,13 +3,13 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    background-color: rgb(250, 242, 237);
+    background-color: rgb(235, 235, 235);
 }
 
 
 
 header {
-    background: lightsalmon;
+    background: rgb(155, 144, 128);
     color: rgb(250, 242, 237);
     padding: 10px 0;
 }
@@ -78,7 +78,7 @@ h2 {
 footer {
     text-align: center;
     padding: 10px 0;
-    background: lightsalmon;
+    background: rgb(155, 144, 128);
     font-weight: bold;
     color: #333;
 }
@@ -158,7 +158,7 @@ h1 {
 
 
 .team-member {
-    background-color: rgb(250, 242, 237);
+    background-color: rgb(230, 228, 227);
     border: 1px solid #cfcfcf;
     border-radius: 0px;
     padding: 20px;
@@ -213,7 +213,7 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 10px 40px;
-    background-color: rgb(255, 218, 206);
+    background-color: rgb(225, 220, 215);
 }
 
 .colorlessPadDiv {

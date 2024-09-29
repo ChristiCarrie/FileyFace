@@ -49,7 +49,10 @@ class FileHandler(FileSystemEventHandler):
                 print(f"Source file '{src_file_path}' does not exist. Skipping.")
                 return
             
+            # ADD USER PROMPT HERE
+
             dst_file_filepath = Requests.ask_for_file(src_file_path, USERNAME)
+            # SEE RIGHT HERE!
             dst_file_filepath = Path(str(dst_file_filepath))
             print(dst_file_filepath)
             
@@ -138,8 +141,8 @@ class FileHandler(FileSystemEventHandler):
         # tk.Label(prompt_window, text=f"Do you want to move '{new_file_name_entry.get()} {file_extension}' to '{destination_folder}'?", bg="#f0f0f0", font=("Arial", 12)).pack(pady=10)
 
         # Variable to store user choice
-        user_choice = [None] 
-
+        user_choice = [None]
+        
         def on_yes():
             user_choice[0] = new_file_name_entry.get().strip()  # Get new file name
             prompt_window.destroy() 
@@ -160,6 +163,7 @@ class FileHandler(FileSystemEventHandler):
 
         regen_button = tk.Button(button_frame, text="Regenerate", command=on_regen, font=("Arial", 12), bg="#eb9336", fg="white")
         regen_button.pack(side=tk.LEFT, padx=10)
+
         no_button = tk.Button(button_frame, text="No", command=on_no, font=("Arial", 12), bg="#f44336", fg="white")
         no_button.pack(side=tk.RIGHT, padx=10)
 
