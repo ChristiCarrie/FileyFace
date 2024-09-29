@@ -21,18 +21,18 @@ File Manager that automatically sorts file downloads. One click away from organi
    --> OpenAI API assists in general file summarisation
 
    --> RazorText API assists in keyword location based on weights (entity, phrase, word, topic)
-5. User is able to change file name within GUI; if name is changed, then file name is re-read
+4. User is able to change file name within GUI; if name is changed, then file name is re-read
 
 **Decision Making**
-1. Data is collected and compiled from file analysis
+1. Directory tree is loaded and saved from computer
 
-   --> including summary, key words, file name, file extension, web address
-3. Directory tree is loaded and saved from computer
-4. Based on folder names and file analysis data, prompt OpenAI API
-5. Inputs are weighted and "best folder destination" is outputted to user
+   --> folder names are saved using os functionality
+2. File analysis data is weighted, evaluated by OpenAI API, and "best folder destination" is outputted to user
 
    --> new folder is created with os functionality if necessary
-7. If user is unsatisfied, "Regenerate" button can be used to re-evaluate inputs for a potentially more accurate folder destination output
+   
+   --> miscellaneous files are filtered into an "Other" file
+4. If user is unsatisfied, "Regenerate" button can be used to re-evaluate inputs for a potentially more accurate folder destination output
 
    --> if user changes the name of a file within the GUI, a "Regenerate" button press is recommended
 
