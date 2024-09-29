@@ -7,7 +7,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 1. Clone the repository
 2. Download all requirements ``` pip install -r requirements.txt ```
 3. Set API key for OpenAI and TextRazor (if needed)
-4. Run in background
+4. Run ``` python src/AppGUI.py ``` in the FileyFace repository
 5. Download .pdf, .docx, .pptx, and .txt files as needed!
    
    --> files will be automatically sorted
