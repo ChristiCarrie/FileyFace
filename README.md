@@ -24,10 +24,8 @@ File Manager that automatically sorts file downloads. One click away from organi
 4. User is able to change file name within GUI; if name is changed, then file name is re-read
 
 **Decision Making**
-1. Directory tree is loaded and saved from computer
-
-   --> folder names are saved using os functionality
-2. File analysis data is weighted, evaluated by OpenAI API, and "best folder destination" is outputted to user
+1. Directory tree is loaded from computer using os functionality
+3. File analysis data (file name, extension, summaries, web address) are evaluated by OpenAI API and "best folder destination" is outputted to user
 
    --> new folder is created with os functionality if necessary
    
@@ -36,13 +34,13 @@ File Manager that automatically sorts file downloads. One click away from organi
 
    --> if user changes the name of a file within the GUI, a "Regenerate" button press is recommended
 
-   --> "Regenerate" can be pressed as frequently as necessary
+   --> "Regenerate" can be pressed as many times as necessary
 
 **File Placement**
 1. Saved directory tree is parsed
 2. File is unzipped from package (if necessary)
 3. Python os package is used to move file from src to destination
-4. If file already exists at that location, copy with "(1)" appended is made
+4. If file already exists at that location, copy file with "(1)" appended to file name
 
 # Demo
 --video here--
