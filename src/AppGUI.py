@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import Requests
+from Unzip import unzip
 
 # Set source root folder path (default=Downloads)
 SRC_ROOT = os.path.expanduser("~/Downloads")
@@ -58,12 +59,26 @@ class FileHandler(FileSystemEventHandler):
                 if user_response == 'REGEN':
                     continue
                 else:
-                    os.makedirs(dst_file_filepath.parent, exist_ok=True)
-                    file_ext = os.path.splitext(file_name)[1]
-                    final_file_name = user_response + file_ext
-                    dst_file_filepath = dst_file_filepath.parent / final_file_name
-                    os.rename(src_file_path, dst_file_filepath)
-                    print(f"Moved '{file_name}' to '{dst_file_filepath.parent}' as '{final_file_name}'")
+                    try:
+                        time.sleep(0.2)
+                        os.makedirs(dst_file_filepath.parent, exist_ok=True)
+                        file_ext = os.path.splitext(file_name)[1]
+                        if file_ext != '.zip':
+                            print('here1')
+                            final_file_name = user_response + file_ext
+                            dst_file_filepath = dst_file_filepath.parent / final_file_name
+                            os.rename(src_file_path, dst_file_filepath)
+                            #print(f"Moved '{file_name}' to '{dst_file_filepath.parent}' as '{final_file_name}'")
+                        else:
+                            #print('here2')
+                            unzip(src_file_path, dst_file_filepath.parent)
+                            time.sleep(4)
+                    except FileExistsError as E:
+                        print('File already exists at specified location - left in Downloads')
+                    finally:
+                        regenerate = False
+            else:
+                regenerate = False
         
 
     def prompt_user(self, file_name, destination_folder):

@@ -28,7 +28,7 @@ def ask_for_file(path, username):
     directory_tree = {tree}
     Important note #1: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
     the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
-    Important note #2: If a file does not contain any defining features or characteristics, please put it in an 'Other' folder
+    Important note #2: If a file does not contain any defining features or characteristics, please put it in an 'Other' folder (USE THIS AS A LAST RESORT AND LAST RESORT ONLY!!)
     Important note #3: DO NOT leave off the file extension
     """
 
@@ -37,7 +37,7 @@ def ask_for_file(path, username):
             {"role": "user", "content": prompt}
         ],
         model = "gpt-4o-mini",
-        max_tokens = 50,
+        max_tokens = 20,
         temperature=0,
     )
     
@@ -72,4 +72,3 @@ def save_tree_to_file(tree, file_name):
         for line in tree:
             f.write(line + '\n')
 
-# ask_for_file(fr"C:\Users\Aadit Bansal\Downloads\Signature.jpeg", 'Aadit Bansal')
