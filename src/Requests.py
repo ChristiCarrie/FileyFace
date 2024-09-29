@@ -8,7 +8,7 @@ load_dotenv()
 client = OpenAI()
 client.api_key = os.getenv('OPENAI_API_KEY')
 
-def ask_for_file(path, username):
+def ask_for_file(path, username, add_suggestions):
     fileName, fileExtension, fileSummary, fileContent, webAddress = fileAll(path)
     directory_tree = get_directory_tree(username)
     with open(directory_tree, "r") as file:
@@ -26,18 +26,26 @@ def ask_for_file(path, username):
     file_content_summary_2 = {str(fileContent)},
     download_web_address = {str(webAddress)},
     directory_tree = {tree}
-    Important note #1: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
-    the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
-    Important note #2: If a file does not contain any defining features or characteristics, please put it in an 'Other' folder (USE THIS AS A LAST RESORT AND LAST RESORT ONLY!!)
-    Important note #3: DO NOT leave off the file extension
     """
+    
+    if add_suggestions != '':
+        prompt += f'Additional suggestions from user: {add_suggestions}'
 
     response = client.chat.completions.create(
         messages = [
-            {"role": "user", "content": prompt}
-        ],
+            {"role": "system", "content": """
+                YOU MUST FOLLOW THESE IMPORTANT RULES:
+                #1: File path must begin with 'FileyFace'
+                #2: Please be consistent with the directory tree. For example, if 'Lecture09.pdf' is stored within its own folder 'Lecture09-topic'
+                the a similar file named 'Lecture08.pdf' should also be stored within its own folder 'Lecture08-topic'
+                #3: If a file does not contain any defining features or characteristics, please put it in an 'Other' folder (USE THIS AS A LAST RESORT AND LAST RESORT ONLY!!)
+                #4: DO NOT leave off the file extension
+                #5: Adopt a breadth-first strategy. DO NOT put a file under an existing directory unless it does correlate with it or the user requires it
+                #6: Similar folders should be in the same level of hierarchy. For example, 'CS3630' and 'MATH3215' should at the same level in the directory tree
+             """},
+            {"role": "user", "content": prompt}],
         model = "gpt-4o-mini",
-        max_tokens = 20,
+        max_tokens = 30,
         temperature=0,
     )
     
