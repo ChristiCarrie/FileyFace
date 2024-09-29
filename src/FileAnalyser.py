@@ -50,8 +50,6 @@ def getWordsOnlyPDF(path):
                 if page_num < len(reader.pages):    
                     page = reader.pages[page_num]
                     text += page.extract_text()
-                else:
-                    print(f'Page {page_num} does not exist in the document.')
         return text
     
 def getWordsOnlyDOCX(path):
