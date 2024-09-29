@@ -5,7 +5,7 @@ File Manager that automatically sorts file downloads. One click away from organi
 
 **Set-Up**
 1. Clone the repository
-2. Download all requirements ``` pip install <requirements> ```
+2. Download all requirements ``` pip install -r requirements.txt ```
 3. Set API key for OpenAI and TextRazor (if needed)
 4. Run in background
 5. Download .pdf, .docx, .pptx, and .txt files as needed!
